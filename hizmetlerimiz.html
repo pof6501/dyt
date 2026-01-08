@@ -28,7 +28,7 @@
             line-height: 1.6;
             color: var(--dark);
             background-color: #f8f9fa;
-            padding: 20px;
+            padding-top: 70px; /* Header için boşluk */
         }
 
         h1, h2, h3, h4 {
@@ -40,6 +40,105 @@
         .container {
             max-width: 1200px;
             margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles - ANA SAYFADAKİ GİBİ */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo h1 {
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 0;
+            line-height: 1.2;
+        }
+
+        .logo span {
+            color: var(--secondary);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 0.9rem;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--primary);
+            cursor: pointer;
+        }
+
+        /* Mobile Menu */
+        .mobile-nav {
+            display: none;
+        }
+
+        .mobile-nav.active {
+            display: block;
+            position: fixed;
+            top: 70px;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            z-index: 999;
+        }
+
+        .mobile-nav ul {
+            list-style: none;
+        }
+
+        .mobile-nav ul li {
+            margin-bottom: 15px;
+        }
+
+        .mobile-nav ul li a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            font-size: 1rem;
+            display: block;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--light-gray);
         }
 
         /* Services Section Styles */
@@ -205,10 +304,57 @@
             color: var(--primary);
         }
 
+        /* Fixed Buttons */
+        .fixed-buttons {
+            position: fixed;
+            right: 15px;
+            bottom: 80px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .whatsapp-btn, .call-btn {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+
+        .whatsapp-btn {
+            background-color: #25D366;
+        }
+
+        .call-btn {
+            background-color: var(--primary);
+        }
+
+        .whatsapp-btn:hover, .call-btn:hover {
+            transform: scale(1.1);
+        }
+
         /* Responsive Design */
         @media (max-width: 1200px) {
             .services-grid {
                 grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+        }
+
+        @media (max-width: 991px) {
+            nav ul {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
             }
         }
 
@@ -297,6 +443,52 @@
     </style>
 </head>
 <body>
+    <!-- HEADER EKLENDİ -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <h1>Dyt. Tuğba <span>Şeker Ağaç</span></h1>
+            </div>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav id="desktopNav">
+                <ul id="mainMenu">
+                    <li><a href="ana-sayfa.html">Ana Sayfa</a></li>
+                    <li><a href="hakkimizda.html">Hakkımda</a></li>
+                    <li><a href="hizmetlerimiz.html" style="color: var(--primary);">Hizmetler</a></li>
+                    <li><a href="yorumlar.html">Yorumlar</a></li>
+                    <li><a href="tarifler.html">Tarifler</a></li>
+                    <li><a href="iletisim.html">İletişim</a></li>
+                </ul>
+            </nav>
+        </div>
+        
+        <!-- Mobile Navigation -->
+        <div class="mobile-nav" id="mobileNav">
+            <ul>
+                <li><a href="ana-sayfa.html">Ana Sayfa</a></li>
+                <li><a href="hakkimizda.html">Hakkımda</a></li>
+                <li><a href="hizmetlerimiz.html" style="color: var(--primary);">Hizmetler</a></li>
+                <li><a href="yorumlar.html">Yorumlar</a></li>
+                <li><a href="tarifler.html">Tarifler</a></li>
+                <li><a href="iletisim.html">İletişim</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Fixed Buttons -->
+    <div class="fixed-buttons">
+        <a href="https://wa.me/905070361859" class="whatsapp-btn" target="_blank">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+        <a href="tel:05070361859" class="call-btn">
+            <i class="fas fa-phone"></i>
+        </a>
+    </div>
+
     <div class="container">
         <section class="services-section">
             <div class="section-title">
@@ -618,54 +810,4 @@
                         <h3>FONKSİYONEL TIP BESLENMESİ</h3>
                         <p>Kök neden analizi ile beslenme programı. Vücudu bütünsel olarak ele alan beslenme yaklaşımı.</p>
                         <div class="service-features">
-                            <span class="feature-tag"><i class="fas fa-check"></i> Detaylı sağlık analizi</span>
-                            <span class="feature-tag"><i class="fas fa-check"></i> Kök neden araştırması</span>
-                            <span class="feature-tag"><i class="fas fa-check"></i> Bütünsel iyileşme</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="service-cta">
-                <a href="#contact" class="btn">
-                    <i class="fas fa-calendar-check"></i> Randevu Al ve Hemen Başla
-                </a>
-                <p class="phone-cta">
-                    📞 <strong>Ücretsiz ön görüşme için:</strong> 0507 036 18 59
-                </p>
-            </div>
-        </section>
-    </div>
-
-    <script>
-        // Hover efekti için ek JavaScript
-        document.addEventListener('DOMContentLoaded', function() {
-            const serviceCards = document.querySelectorAll('.service-card');
-            
-            serviceCards.forEach(card => {
-                card.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateY(-10px)';
-                });
-                
-                card.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateY(0)';
-                });
-            });
-            
-            // Tıklama animasyonu
-            const ctaButton = document.querySelector('.btn');
-            if (ctaButton) {
-                ctaButton.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    this.style.transform = 'scale(0.95)';
-                    setTimeout(() => {
-                        this.style.transform = 'scale(1)';
-                        // Burada randevu sayfasına yönlendirme yapılabilir
-                        window.location.href = "#contact";
-                    }, 200);
-                });
-            }
-        });
-    </script>
-</body>
-</html>
+                            <span class
