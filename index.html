@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Diyetisyen Tuğba Şeker Ağaç | Beslenme ve Diyet Danışmanlığı</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap">
@@ -28,6 +28,14 @@
             line-height: 1.6;
             color: var(--dark);
             overflow-x: hidden;
+            width: 100%;
+            max-width: 100vw;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        html {
+            width: 100%;
+            overflow-x: hidden;
         }
 
         h1, h2, h3, h4 {
@@ -41,6 +49,411 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
+        }
+
+        /* Kapı Açılış Animasyonu Stilleri */
+        .door-animation-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #2c3e50 0%, #4a6491 100%);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .door-animation-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            height: 80vh;
+            display: flex;
+            perspective: 1500px;
+        }
+
+        .door-left, .door-right {
+            position: absolute;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(145deg, #8B4513 0%, #A0522D 30%, #8B4513 100%);
+            border: 15px solid #5D4037;
+            border-radius: 10px 0 0 10px;
+            box-shadow: 
+                inset 0 0 30px rgba(0, 0, 0, 0.5),
+                0 10px 40px rgba(0, 0, 0, 0.7);
+            transition: transform 2.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .door-left {
+            left: 0;
+            transform-origin: left center;
+            border-right: 5px solid #3E2723;
+        }
+
+        .door-right {
+            right: 0;
+            transform-origin: right center;
+            border-left: 5px solid #3E2723;
+            border-radius: 0 10px 10px 0;
+        }
+
+        /* Kapı tahta deseni */
+        .door-left:before, .door-right:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(255, 255, 255, 0.1) 50%, 
+                transparent 100%);
+            background-size: 200% 100%;
+            animation: woodGrain 3s infinite linear;
+        }
+
+        @keyframes woodGrain {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* Kapı içeriği */
+        .door-content {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 1.5s ease 1s;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .door-animation-container.open .door-content {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .door-image {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 5px solid var(--primary);
+            box-shadow: 0 0 30px rgba(76, 175, 80, 0.5);
+            margin-bottom: 25px;
+            animation: pulse 2s infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 20px rgba(76, 175, 80, 0.5); }
+            100% { box-shadow: 0 0 40px rgba(76, 175, 80, 0.8); }
+        }
+
+        .door-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .door-text {
+            color: white;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+            max-width: 600px;
+        }
+
+        .door-text h1 {
+            font-size: 2.5rem;
+            color: #FFD700;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            animation: textGlow 2s infinite alternate;
+        }
+
+        @keyframes textGlow {
+            0% { text-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
+            100% { text-shadow: 0 0 20px rgba(255, 215, 0, 0.8), 0 0 30px rgba(255, 215, 0, 0.6); }
+        }
+
+        .door-text h2 {
+            font-size: 2rem;
+            color: #4CAF50;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+            padding: 0 20px;
+        }
+
+        .door-text h2:after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #4CAF50, transparent);
+            bottom: -10px;
+            left: 0;
+        }
+
+        .door-subtitles {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 25px 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .door-subtitles span {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 12px 20px;
+            border-radius: 50px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            animation: fadeInUp 0.5s ease forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .door-subtitles span:nth-child(1) { animation-delay: 0.2s; }
+        .door-subtitles span:nth-child(2) { animation-delay: 0.4s; }
+        .door-subtitles span:nth-child(3) { animation-delay: 0.6s; }
+        .door-subtitles span:nth-child(4) { animation-delay: 0.8s; }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .door-subtitles span:hover {
+            background: rgba(76, 175, 80, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .door-subtitles i {
+            color: #FFD700;
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        .enter-btn {
+            background: linear-gradient(45deg, #FF9800, #FF5722);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.3rem;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 30px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            box-shadow: 0 5px 20px rgba(255, 87, 34, 0.4);
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: buttonPulse 1.5s infinite alternate;
+        }
+
+        @keyframes buttonPulse {
+            0% { transform: scale(1); box-shadow: 0 5px 20px rgba(255, 87, 34, 0.4); }
+            100% { transform: scale(1.05); box-shadow: 0 8px 25px rgba(255, 87, 34, 0.6); }
+        }
+
+        .enter-btn:hover {
+            background: linear-gradient(45deg, #FF5722, #FF9800);
+            transform: scale(1.1);
+            box-shadow: 0 10px 30px rgba(255, 87, 34, 0.7);
+        }
+
+        .enter-btn i {
+            font-size: 1.5rem;
+        }
+
+        /* Kapı kolu */
+        .door-knob {
+            position: absolute;
+            top: 50%;
+            z-index: 3;
+            width: 60px;
+            height: 60px;
+            transform: translateY(-50%);
+        }
+
+        .left-knob {
+            right: -30px;
+        }
+
+        .right-knob {
+            left: -30px;
+        }
+
+        .knob {
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 30%, #C0C0C0, #808080, #404040);
+            border-radius: 50%;
+            box-shadow: 
+                0 5px 15px rgba(0, 0, 0, 0.5),
+                inset 0 0 10px rgba(255, 255, 255, 0.2);
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .knob:before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            background: radial-gradient(circle at 40% 40%, #E8E8E8, #A0A0A0);
+            border-radius: 50%;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .knob:after {
+            content: '';
+            position: absolute;
+            top: 25px;
+            left: 25px;
+            width: 10px;
+            height: 10px;
+            background: #606060;
+            border-radius: 50%;
+        }
+
+        .knob:hover {
+            transform: rotate(30deg);
+        }
+
+        /* Arka plan yıldızları */
+        .door-animation-overlay:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, #eee, transparent),
+                radial-gradient(2px 2px at 40px 70px, #fff, transparent),
+                radial-gradient(2px 2px at 50px 160px, #ddd, transparent),
+                radial-gradient(2px 2px at 90px 40px, #fff, transparent),
+                radial-gradient(2px 2px at 130px 80px, #fff, transparent),
+                radial-gradient(2px 2px at 160px 120px, #ddd, transparent);
+            background-repeat: repeat;
+            background-size: 200px 200px;
+            animation: starsMove 50s linear infinite;
+        }
+
+        @keyframes starsMove {
+            from { background-position: 0 0; }
+            to { background-position: 0 200px; }
+        }
+
+        /* Işık huzmeleri */
+        .door-animation-overlay:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(76, 175, 80, 0.2), transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 152, 0, 0.2), transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(255, 215, 0, 0.2), transparent 50%);
+            animation: lightBeams 10s infinite alternate;
+        }
+
+        @keyframes lightBeams {
+            0% { opacity: 0.3; }
+            100% { opacity: 0.7; }
+        }
+
+        /* Responsive Tasarım - Kapı Animasyonu */
+        @media (max-width: 768px) {
+            .door-animation-container {
+                height: 90vh;
+            }
+            
+            .door-text h1 {
+                font-size: 1.8rem;
+            }
+            
+            .door-text h2 {
+                font-size: 1.5rem;
+            }
+            
+            .door-image {
+                width: 140px;
+                height: 140px;
+            }
+            
+            .door-subtitles span {
+                font-size: 0.9rem;
+                padding: 10px 15px;
+            }
+            
+            .enter-btn {
+                padding: 12px 30px;
+                font-size: 1.1rem;
+            }
+            
+            .door-left, .door-right {
+                border-width: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .door-text h1 {
+                font-size: 1.5rem;
+            }
+            
+            .door-text h2 {
+                font-size: 1.2rem;
+            }
+            
+            .door-image {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .door-subtitles {
+                gap: 8px;
+            }
+            
+            .door-subtitles span {
+                font-size: 0.8rem;
+                padding: 8px 12px;
+            }
+            
+            .enter-btn {
+                padding: 10px 25px;
+                font-size: 1rem;
+            }
         }
 
         /* Header Styles */
@@ -58,6 +471,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 10px 20px;
+            width: 100%;
         }
 
         /* Logo Container */
@@ -66,11 +480,13 @@
             align-items: center;
             gap: 15px;
             flex-shrink: 0;
+            max-width: 70%;
         }
 
         .logo-img {
             height: 50px;
             width: auto;
+            flex-shrink: 0;
         }
 
         .logo-img img {
@@ -82,6 +498,8 @@
         .logo-text {
             display: flex;
             flex-direction: column;
+            flex: 1;
+            min-width: 0;
         }
 
         .logo-text h1 {
@@ -89,6 +507,7 @@
             color: var(--primary);
             margin-bottom: 0;
             line-height: 1.2;
+            word-wrap: break-word;
         }
 
         .logo-text span {
@@ -118,6 +537,7 @@
             font-weight: 500;
             transition: color 0.3s;
             font-size: 0.9rem;
+            white-space: nowrap;
         }
 
         nav ul li a:hover {
@@ -131,6 +551,303 @@
             font-size: 1.5rem;
             color: var(--primary);
             cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        /* Logo Video Button Styles */
+        .logo-video-btn-container {
+            position: fixed;
+            left: 20px;
+            bottom: 20px;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            animation: floatUpDown 4s ease-in-out infinite;
+        }
+
+        @keyframes floatUpDown {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .logo-video-btn {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            border: 3px solid var(--primary);
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .logo-video-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            border-color: var(--secondary);
+        }
+
+        .logo-video-btn video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            border-radius: 50%;
+        }
+
+        /* Logo video text (hoverda görünen) */
+        .logo-video-text {
+            background-color: white;
+            padding: 12px 20px;
+            border-radius: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+            max-width: 250px;
+            font-weight: 500;
+            color: var(--primary);
+            font-size: 0.9rem;
+            line-height: 1.4;
+            position: relative;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.5s ease;
+            pointer-events: none;
+        }
+
+        .logo-video-btn-container:hover .logo-video-text {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .logo-video-text:after {
+            content: '';
+            position: absolute;
+            right: 100%;
+            top: 50%;
+            transform: translateY(-50%);
+            border-width: 8px;
+            border-style: solid;
+            border-color: transparent white transparent transparent;
+        }
+
+        /* Video açıkken etrafında dönen butonlar */
+        .logo-video-popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s ease;
+        }
+
+        .logo-video-popup-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .video-popup-center {
+            position: relative;
+            width: 250px;
+            height: 250px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .video-popup-center video {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: center;
+            border: 5px solid var(--primary);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            z-index: 2;
+            position: relative;
+        }
+
+        .popup-close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            color: white;
+            cursor: pointer;
+            z-index: 2001;
+            transition: transform 0.3s;
+        }
+
+        .popup-close-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* Dönen butonlar */
+        .popup-action-buttons {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            animation: rotateButtons 20s linear infinite;
+        }
+
+        @keyframes rotateButtons {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .popup-action-btn {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+            transform-origin: center;
+            z-index: 1;
+            font-size: 1.3rem;
+        }
+
+        .popup-action-btn.whatsapp {
+            background-color: #25D366;
+            top: -30px;
+            left: calc(50% - 30px);
+        }
+
+        .popup-action-btn.call {
+            background-color: var(--primary);
+            top: calc(50% - 30px);
+            right: -30px;
+        }
+
+        .popup-action-btn.instagram {
+            background: linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D);
+            bottom: -30px;
+            left: calc(50% - 30px);
+        }
+
+        .popup-action-btn.location {
+            background-color: var(--secondary);
+            top: calc(50% - 30px);
+            left: -30px;
+        }
+
+        .popup-action-btn:hover {
+            transform: scale(1.1);
+            z-index: 3;
+        }
+
+        /* Buton etiketleri */
+        .popup-action-btn span {
+            position: absolute;
+            background-color: white;
+            color: var(--dark);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            white-space: nowrap;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s;
+            pointer-events: none;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .popup-action-btn.whatsapp span {
+            top: 100%;
+            margin-top: 10px;
+        }
+
+        .popup-action-btn.call span {
+            right: 100%;
+            margin-right: 10px;
+            top: 50%;
+            transform: translateY(-50%) translateX(10px);
+        }
+
+        .popup-action-btn.instagram span {
+            bottom: 100%;
+            margin-bottom: 10px;
+        }
+
+        .popup-action-btn.location span {
+            left: 100%;
+            margin-left: 10px;
+            top: 50%;
+            transform: translateY(-50%) translateX(-10px);
+        }
+
+        .popup-action-btn:hover span {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .popup-action-btn.call:hover span {
+            transform: translateY(-50%) translateX(0);
+        }
+
+        .popup-action-btn.location:hover span {
+            transform: translateY(-50%) translateX(0);
+        }
+
+        /* Mobilde her zaman görünen yazı */
+        .logo-video-text-mobile {
+            display: none;
+            background-color: white;
+            padding: 10px 15px;
+            border-radius: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+            max-width: 200px;
+            font-weight: 500;
+            color: var(--primary);
+            font-size: 0.85rem;
+            line-height: 1.3;
+            position: relative;
+            margin-right: 10px;
+            animation: pulseText 3s infinite;
+        }
+
+        @keyframes pulseText {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.03);
+            }
+        }
+
+        .logo-video-text-mobile:after {
+            content: '';
+            position: absolute;
+            right: -8px;
+            top: 50%;
+            transform: translateY(-50%);
+            border-width: 8px;
+            border-style: solid;
+            border-color: transparent transparent transparent white;
         }
 
         /* Hero Section with Video */
@@ -143,6 +860,7 @@
             text-align: center;
             margin-top: 70px;
             overflow: hidden;
+            width: 100%;
         }
 
         .hero-video {
@@ -171,6 +889,7 @@
             max-width: 800px;
             margin: 0 auto;
             padding: 0 20px;
+            width: 100%;
         }
 
         .hero h2 {
@@ -252,12 +971,13 @@
         /* Section Common */
         section {
             padding: 60px 0;
+            width: 100%;
         }
 
         .section-title {
             text-align: center;
             margin-bottom: 40px;
-            position: relative;
+            width: 100%;
         }
 
         .section-title h2 {
@@ -266,28 +986,9 @@
             position: relative;
             display: inline-block;
             padding: 0 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
         }
 
-        /* TIKLANABİLİR BAŞLIKLAR İÇİN YENİ STİL */
-        .clickable-title {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            padding: 0 20px;
-        }
-
-        .clickable-title:hover {
-            color: var(--secondary);
-            transform: translateY(-3px);
-        }
-
-        .clickable-title:after {
+        .section-title h2:after {
             content: '';
             position: absolute;
             width: 70%;
@@ -295,44 +996,6 @@
             background-color: var(--secondary);
             bottom: -10px;
             left: 15%;
-            transition: all 0.3s ease;
-        }
-
-        .clickable-title:hover:after {
-            background-color: var(--primary-dark);
-            width: 90%;
-            left: 5%;
-        }
-
-        .clickable-title i {
-            font-size: 1.2rem;
-            opacity: 0;
-            transition: all 0.3s ease;
-        }
-
-        .clickable-title:hover i {
-            opacity: 1;
-            transform: translateX(5px);
-        }
-
-        /* Mobile'de başlıkların daha belirgin olması için */
-        @media (max-width: 768px) {
-            .clickable-title {
-                background-color: rgba(76, 175, 80, 0.1);
-                padding: 10px 20px;
-                border-radius: 8px;
-                border: 2px solid transparent;
-            }
-            
-            .clickable-title:hover {
-                background-color: rgba(76, 175, 80, 0.2);
-                border-color: var(--primary);
-            }
-            
-            .clickable-title i {
-                opacity: 1;
-                font-size: 1rem;
-            }
         }
 
         /* About Section */
@@ -340,6 +1003,7 @@
             display: flex;
             flex-direction: column;
             gap: 40px;
+            width: 100%;
         }
 
         .about-img {
@@ -372,6 +1036,7 @@
             flex-wrap: wrap;
             gap: 15px;
             margin-top: 25px;
+            width: 100%;
         }
 
         .diploma-item {
@@ -391,6 +1056,7 @@
             display: grid;
             grid-template-columns: 1fr;
             gap: 15px;
+            width: 100%;
         }
 
         .service-item {
@@ -420,11 +1086,271 @@
             font-size: 1rem;
         }
 
+        /* Blog Section */
+        .blog-section {
+            background-color: var(--light-gray);
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+            width: 100%;
+        }
+
+        .blog-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .blog-img {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .blog-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .blog-card:hover .blog-img img {
+            transform: scale(1.05);
+        }
+
+        .blog-content {
+            padding: 20px;
+        }
+
+        .blog-date {
+            display: flex;
+            align-items: center;
+            color: var(--gray);
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+        }
+
+        .blog-date i {
+            margin-right: 5px;
+            color: var(--primary);
+        }
+
+        .blog-content h3 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .blog-excerpt {
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            color: var(--gray);
+        }
+
+        .read-more {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .read-more i {
+            margin-left: 5px;
+            transition: transform 0.3s;
+        }
+
+        .read-more:hover i {
+            transform: translateX(5px);
+        }
+
+        /* Sağlıklı Beslenme Bölümü */
+        .healthy-eating-section {
+            padding: 60px 0;
+            background-color: white;
+        }
+
+        .healthy-eating-content {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            width: 100%;
+        }
+
+        @media (min-width: 768px) {
+            .healthy-eating-content {
+                flex-direction: row;
+                align-items: center;
+            }
+        }
+
+        .healthy-eating-img {
+            width: 100%;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        @media (min-width: 768px) {
+            .healthy-eating-img {
+                flex: 1;
+            }
+        }
+
+        .healthy-eating-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            min-height: 300px;
+        }
+
+        .healthy-eating-text {
+            width: 100%;
+        }
+
+        @media (min-width: 768px) {
+            .healthy-eating-text {
+                flex: 1;
+                padding-left: 40px;
+            }
+        }
+
+        .healthy-eating-text h3 {
+            color: var(--primary);
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+        }
+
+        /* Metabolizma Hızı Bölümü */
+        .metabolism-section {
+            padding: 60px 0;
+            background-color: var(--light-gray);
+        }
+
+        .metabolism-content {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            width: 100%;
+        }
+
+        @media (min-width: 768px) {
+            .metabolism-content {
+                flex-direction: row-reverse;
+                align-items: center;
+            }
+        }
+
+        .metabolism-img {
+            width: 100%;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        @media (min-width: 768px) {
+            .metabolism-img {
+                flex: 1;
+            }
+        }
+
+        .metabolism-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            min-height: 300px;
+        }
+
+        .metabolism-text {
+            width: 100%;
+        }
+
+        @media (min-width: 768px) {
+            .metabolism-text {
+                flex: 1;
+                padding-right: 40px;
+            }
+        }
+
+        .metabolism-text h3 {
+            color: var(--primary);
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+        }
+
+        /* Glutensiz Beslenme Bölümü */
+        .glutenfree-section {
+            padding: 60px 0;
+            background-color: white;
+        }
+
+        .glutenfree-content {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            width: 100%;
+        }
+
+        @media (min-width: 768px) {
+            .glutenfree-content {
+                flex-direction: row;
+                align-items: center;
+            }
+        }
+
+        .glutenfree-img {
+            width: 100%;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        @media (min-width: 768px) {
+            .glutenfree-img {
+                flex: 1;
+            }
+        }
+
+        .glutenfree-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            min-height: 300px;
+        }
+
+        .glutenfree-text {
+            width: 100%;
+        }
+
+        @media (min-width: 768px) {
+            .glutenfree-text {
+                flex: 1;
+                padding-left: 40px;
+            }
+        }
+
+        .glutenfree-text h3 {
+            color: var(--primary);
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+        }
+
         /* Testimonials Section */
         .testimonials-grid {
             display: grid;
             grid-template-columns: 1fr;
             gap: 20px;
+            width: 100%;
         }
 
         .testimonial-card {
@@ -475,11 +1401,6 @@
             margin-top: 30px;
         }
 
-        .success-story h3 {
-            font-size: 1.3rem;
-            margin-bottom: 15px;
-        }
-
         .success-metrics {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -510,6 +1431,7 @@
             display: grid;
             grid-template-columns: 1fr;
             gap: 25px;
+            width: 100%;
         }
 
         .recipe-card {
@@ -568,41 +1490,12 @@
             font-size: 0.95rem;
         }
 
-        /* Instagram Section */
-        .instagram {
-            background-color: var(--light-gray);
-        }
-
-        .instagram-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-        }
-
-        .insta-item {
-            border-radius: 10px;
-            overflow: hidden;
-            height: 150px;
-            position: relative;
-            background-color: #ddd;
-        }
-
-        .insta-item:after {
-            content: '\f16d';
-            font-family: 'Font Awesome 6 Brands';
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            color: white;
-            font-size: 1rem;
-            opacity: 0.8;
-        }
-
-        /* Youtube Section - EDGE UYUMLU */
+        /* Youtube Section */
         .youtube-videos {
             display: grid;
             grid-template-columns: 1fr;
             gap: 25px;
+            width: 100%;
         }
 
         .video-container {
@@ -621,47 +1514,6 @@
             width: 100%;
             height: 100%;
             border: none;
-            border-radius: 10px;
-        }
-
-        /* YouTube Fallback Stili */
-        .youtube-fallback {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #ff0000, #cc0000);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 20px;
-            border-radius: 10px;
-            color: white;
-            z-index: 10;
-        }
-
-        .youtube-fallback i {
-            font-size: 3rem;
-            margin-bottom: 15px;
-        }
-
-        .youtube-fallback p {
-            margin-bottom: 15px;
-            font-size: 1rem;
-        }
-
-        .youtube-fallback .btn {
-            background-color: white;
-            color: #ff0000;
-            padding: 8px 20px;
-            font-size: 0.9rem;
-        }
-
-        .youtube-fallback .btn:hover {
-            background-color: #f0f0f0;
         }
 
         /* Contact Section */
@@ -678,6 +1530,7 @@
             display: flex;
             flex-direction: column;
             gap: 30px;
+            width: 100%;
         }
 
         .contact-info {
@@ -730,6 +1583,7 @@
             background-color: var(--dark);
             color: white;
             padding: 50px 0 25px;
+            width: 100%;
         }
 
         .footer-content {
@@ -737,6 +1591,7 @@
             flex-direction: column;
             gap: 30px;
             margin-bottom: 30px;
+            width: 100%;
         }
 
         .footer-column {
@@ -812,10 +1667,12 @@
 
         .mobile-nav ul {
             list-style: none;
+            width: 100%;
         }
 
         .mobile-nav ul li {
             margin-bottom: 15px;
+            width: 100%;
         }
 
         .mobile-nav ul li a {
@@ -826,6 +1683,106 @@
             display: block;
             padding: 10px 0;
             border-bottom: 1px solid var(--light-gray);
+            width: 100%;
+        }
+
+        /* Metabolizma Hızı Hesaplayıcı */
+        .metabolism-calculator {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            margin-top: 40px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--secondary);
+            width: 100%;
+        }
+
+        .metabolism-calculator h3 {
+            color: var(--primary);
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .calculator-form {
+            display: grid;
+            gap: 15px;
+            width: 100%;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .form-group label {
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .form-group input, .form-group select {
+            padding: 12px;
+            border: 1px solid var(--light-gray);
+            border-radius: 5px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            width: 100%;
+        }
+
+        .calculate-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        .calculate-btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .result-box {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: var(--light-gray);
+            border-radius: 5px;
+            display: none;
+            width: 100%;
+        }
+
+        .result-box.active {
+            display: block;
+        }
+
+        .result-box h4 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .result-box p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .result-value {
+            font-weight: bold;
+            color: var(--primary-dark);
+            font-size: 1.2rem;
+        }
+
+        .result-note {
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin-top: 10px;
+            font-style: italic;
         }
 
         /* Tablet Styles */
@@ -863,7 +1820,7 @@
                 font-size: 1.2rem;
             }
             
-            .clickable-title {
+            .section-title h2 {
                 font-size: 2.3rem;
             }
             
@@ -900,9 +1857,9 @@
                 gap: 30px;
             }
             
-            .instagram-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 15px;
+            .blog-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 30px;
             }
             
             .youtube-videos {
@@ -924,6 +1881,15 @@
             
             .success-metrics {
                 grid-template-columns: repeat(4, 1fr);
+            }
+            
+            .logo-video-btn {
+                width: 90px;
+                height: 90px;
+            }
+            
+            .calculator-form {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
@@ -949,10 +1915,6 @@
                 font-size: 3.2rem;
             }
             
-            .clickable-title {
-                font-size: 2.8rem;
-            }
-            
             .services-list {
                 grid-template-columns: repeat(3, 1fr);
             }
@@ -965,8 +1927,8 @@
                 grid-template-columns: repeat(3, 1fr);
             }
             
-            .instagram-grid {
-                grid-template-columns: repeat(5, 1fr);
+            .blog-grid {
+                grid-template-columns: repeat(3, 1fr);
             }
             
             .youtube-videos {
@@ -979,6 +1941,11 @@
             
             .mobile-nav {
                 display: none !important;
+            }
+            
+            .logo-video-btn {
+                width: 100px;
+                height: 100px;
             }
         }
 
@@ -1009,13 +1976,270 @@
                 height: auto;
             }
             
-            .clickable-title {
+            /* Logo Video Button Mobile Styles */
+            .logo-video-btn-container {
+                left: 15px;
+                bottom: 15px;
+                flex-direction: row-reverse;
+            }
+            
+            .logo-video-btn {
+                width: 70px;
+                height: 70px;
+            }
+            
+            /* Mobilde her zaman görünen yazı */
+            .logo-video-text-mobile {
+                display: block;
+            }
+            
+            /* Desktop yazısını mobilde gizle */
+            .logo-video-text {
+                display: none;
+            }
+            
+            /* Video popup mobil için düzenlemeler */
+            .video-popup-center {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .video-popup-center video {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .popup-action-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 1.1rem;
+            }
+            
+            .popup-action-btn.whatsapp {
+                top: -25px;
+                left: calc(50% - 25px);
+            }
+            
+            .popup-action-btn.call {
+                top: calc(50% - 25px);
+                right: -25px;
+            }
+            
+            .popup-action-btn.instagram {
+                bottom: -25px;
+                left: calc(50% - 25px);
+            }
+            
+            .popup-action-btn.location {
+                top: calc(50% - 25px);
+                left: -25px;
+            }
+        }
+        
+        /* Desktop yazı stilleri */
+        @media (min-width: 992px) {
+            .logo-video-text-mobile {
+                display: none;
+            }
+            
+            .logo-video-text {
+                display: block;
+            }
+        }
+        
+        /* Extra small devices */
+        @media (max-width: 480px) {
+            body {
+                font-size: 14px;
+            }
+            
+            .container {
+                padding: 0 15px;
+            }
+            
+            .logo-text h1 {
+                font-size: 0.9rem;
+            }
+            
+            .logo-img {
+                height: 40px;
+            }
+            
+            .logo-video-btn {
+                width: 60px;
+                height: 60px;
+                border-width: 2px;
+            }
+            
+            .logo-video-btn-container {
+                left: 10px;
+                bottom: 10px;
+            }
+            
+            .logo-video-text-mobile {
+                font-size: 0.75rem;
+                padding: 8px 12px;
+                max-width: 160px;
+            }
+            
+            .video-popup-center {
+                width: 180px;
+                height: 180px;
+            }
+            
+            .video-popup-center video {
+                width: 130px;
+                height: 130px;
+            }
+            
+            .popup-action-btn {
+                width: 45px;
+                height: 45px;
+                font-size: 1rem;
+            }
+            
+            .popup-action-btn span {
+                font-size: 0.7rem;
+                padding: 4px 8px;
+            }
+            
+            .hero {
+                min-height: 400px;
+                padding: 120px 0 60px;
+            }
+            
+            .hero h2 {
                 font-size: 1.8rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .section-title h2 {
+                font-size: 1.6rem;
+            }
+            
+            .btn {
+                padding: 10px 25px;
+                font-size: 0.9rem;
+            }
+            
+            section {
+                padding: 40px 0;
+            }
+        }
+        
+        /* Very small devices */
+        @media (max-width: 360px) {
+            .logo-text h1 {
+                font-size: 0.8rem;
+            }
+            
+            .logo-img {
+                height: 35px;
+            }
+            
+            .logo-video-btn {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .logo-video-text-mobile {
+                font-size: 0.7rem;
+                max-width: 140px;
+                padding: 6px 10px;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Kapı Açılış Animasyonu -->
+    <div class="door-animation-overlay" id="doorAnimation">
+        <div class="door-animation-container">
+            <div class="door-left"></div>
+            <div class="door-right"></div>
+            
+            <div class="door-content">
+                <div class="door-image">
+                    <img src="https://www.tugbasekeragac.com/images/tugba-dyt-reklam.webp.jpg" alt="Diyetisyen Tuğba Şeker Ağaç">
+                </div>
+                
+                <div class="door-text">
+                    <h1>Diyetisyen Tuğba Şeker Ağaç</h1>
+                    <h2>Hizmetlerimiz</h2>
+                    <div class="door-subtitles">
+                        <span><i class="fas fa-check-circle"></i> Kişiye Özel Diyet Programları</span>
+                        <span><i class="fas fa-check-circle"></i> Online Danışmanlık</span>
+                        <span><i class="fas fa-check-circle"></i> Fonksiyonel Tıp Yaklaşımı</span>
+                        <span><i class="fas fa-check-circle"></i> Sağlıklı Yaşam Koçluğu</span>
+                    </div>
+                    
+                    <button class="enter-btn" id="enterSiteBtn">
+                        <i class="fas fa-door-open"></i> Sayfaya Gir
+                    </button>
+                </div>
+            </div>
+            
+            <div class="door-knob left-knob">
+                <div class="knob"></div>
+            </div>
+            <div class="door-knob right-knob">
+                <div class="knob"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Logo Video Butonu ve Mobil Yazı -->
+    <div class="logo-video-btn-container" id="logoVideoBtnContainer">
+        <div class="logo-video-text-mobile" id="logoVideoTextMobile">
+            Benimle diyete başlamaya ne dersin? 🥗
+        </div>
+        <div class="logo-video-text" id="logoVideoText">
+            Benimle diyete başlamaya ne dersin? 🥗<br>
+            Haydi, sağlıklı bir başlangıç yapalım!
+        </div>
+        <div class="logo-video-btn" id="logoVideoBtn">
+            <video autoplay muted loop playsinline>
+                <source src="https://www.tugbasekeragac.com/images/dyt-seker-agac-tugba.webp.mp4" type="video/mp4">
+                Tarayıcınız video etiketini desteklemiyor.
+            </video>
+        </div>
+    </div>
+
+    <!-- Video Popup Overlay (Dönen Butonlar ile) -->
+    <div class="logo-video-popup-overlay" id="logoVideoPopupOverlay">
+        <button class="popup-close-btn" id="popupCloseBtn">
+            <i class="fas fa-times"></i>
+        </button>
+        
+        <div class="video-popup-center">
+            <video id="popupVideo" autoplay muted loop playsinline>
+                <source src="https://www.tugbasekeragac.com/images/dyt-seker-agac-tugba.webp.mp4" type="video/mp4">
+                Tarayıcınız video etiketini desteklemiyor.
+            </video>
+            
+            <div class="popup-action-buttons">
+                <a href="https://wa.me/905070361859" class="popup-action-btn whatsapp" target="_blank" title="WhatsApp">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>WhatsApp</span>
+                </a>
+                <a href="tel:05070361859" class="popup-action-btn call" title="Ara">
+                    <i class="fas fa-phone"></i>
+                    <span>Ara</span>
+                </a>
+                <a href="https://www.instagram.com/dyt.tugbasekeragac/" class="popup-action-btn instagram" target="_blank" title="Instagram">
+                    <i class="fab fa-instagram"></i>
+                    <span>Instagram</span>
+                </a>
+                <a href="https://goo.gl/maps/9cMbzVaUQh3vTnvV6" class="popup-action-btn location" target="_blank" title="Konum">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Konum</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
     <!-- Sabit WhatsApp, Arama ve Instagram Butonları -->
     <div class="fixed-buttons">
         <a href="https://wa.me/905070361859" class="whatsapp-btn" target="_blank" title="WhatsApp">
@@ -1035,9 +2259,6 @@
             <!-- Logo Container -->
             <div class="logo-container">
                 <div class="logo-img">
-                    <!-- LOGO RESMİNİ BURAYA EKLEYİN -->
-                    <!-- Örnek: <img src="LOGO_URL_NIZ" alt="Diyetisyen Tuğba Şeker Ağaç Logo"> -->
-                    <!-- Logo yoksa placeholder kullan -->
                     <div style="width: 50px; height: 50px; background-color: var(--primary); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem;">
                         <i class="fas fa-apple-alt"></i>
                     </div>
@@ -1052,27 +2273,29 @@
                 <i class="fas fa-bars"></i>
             </button>
             
-           <nav id="desktopNav">
+            <nav id="desktopNav">
                 <ul id="mainMenu">
-                <li><a href="https://www.tugbasekeragac.com/">Ana Sayfa</a></li>
-                <li><a href="#about">Hakkımda</a></li>
-                <li><a href="#services">Hizmetler</a></li>
-                <li><a href="#testimonials">Yorumlar</a></li>
-                <li><a href="#youtube">Videolar</a></li>
-                <li><a href="#contact">İletişim</a></li>
+                    <li><a href="https://www.tugbasekeragac.com/">Ana Sayfa</a></li>
+                    <li><a href="/hakkimizda/">Hakkımda</a></li>
+                    <li><a href="/hizmetlerimiz/">Hizmetler</a></li>
+                    <li><a href="/blog/">Blog</a></li>
+                    <li><a href="/tarifler/">Tarifler</a></li>
+                    <li><a href="/yorumlar/">Yorumlar</a></li>
+                    <li><a href="/iletisim/">İletişim</a></li>
                 </ul>
             </nav>
         </div>
         
         <!-- Mobile Navigation -->
         <div class="mobile-nav" id="mobileNav">
-           <ul>
-                <li><a href="https://www.tugbasekeragac.com//">Ana Sayfa</a></li>
-                <li><a href="#about">Hakkımda</a></li>
-                <li><a href="#services">Hizmetler</a></li>
-                <li><a href="#testimonials">Yorumlar</a></li>
-                <li><a href="#youtube">Videolar</a></li>
-                <li><a href="#contact">İletişim</a></li>
+            <ul>
+                <li><a href="https://www.tugbasekeragac.com/">Ana Sayfa</a></li>
+                <li><a href="/hakkimizda/">Hakkımda</a></li>
+                 <li><a href="/hizmetlerimiz/">Hizmetler</a></li>
+                <li><a href="/blog/">Blog</a></li>
+                <li><a href="/tarifler/">Tarifler</a></li>
+                <li><a href="/yorumlar/">Yorumlar</a></li>
+                <li><a href="/iletisim/">İletişim</a></li>
             </ul>
         </div>
     </header>
@@ -1087,18 +2310,15 @@
         <div class="container hero-content">
             <h2>Sağlıklı Beslenme, Mutlu Yaşam</h2>
             <p>Diyetisyen Tuğba Şeker Ağaç ile kişiye özel beslenme programları, sağlıklı tarifler ve kalıcı sonuçlar için buradayım.</p>
-            <a href="#contact" class="btn">Randevu Al</a>
+            <a href="/iletisim/" class="btn">Randevu Al</a>
         </div>
     </section>
 
-    <!-- About Section - TIKLANABİLİR BAŞLIK -->
+    <!-- About Section -->
     <section id="about">
         <div class="container">
             <div class="section-title">
-                <a href="#about" class="clickable-title">
-                    <h2>Hakkımda</h2>
-                    <i class="fas fa-arrow-right"></i>
-                </a>
+                <h2>Hakkımda</h2>
             </div>
             
             <div class="about-content">
@@ -1134,14 +2354,45 @@
         </div>
     </section>
 
-    <!-- Services Section - TIKLANABİLİR BAŞLIK -->
+    <!-- Sağlıklı Beslenme Bölümü -->
+    <section class="healthy-eating-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Sağlıklı Beslenme Nedir?</h2>
+            </div>
+            
+            <div class="healthy-eating-content">
+                <div class="healthy-eating-img">
+                    <img src="https://www.tugbasekeragac.com/images/saglikli-diyet-beslenme.webp.png" alt="Sağlıklı Beslenme ve Diyetisyen" loading="lazy">
+                </div>
+                
+                <div class="healthy-eating-text">
+                    <h3>Sağlıklı Beslenmenin Temel Prensipleri</h3>
+                    <p>Sağlıklı beslenme, vücudun ihtiyaç duyduğu tüm besin öğelerini yeterli ve dengeli şekilde almak demektir. Bu sadece kilo kontrolü için değil, genel sağlık durumunun iyileştirilmesi için de gereklidir.</p>
+                    
+                    <p>Doğru beslenme ile şu hastalıkların riskini azaltabilirsiniz:</p>
+                    
+                    <ul style="margin: 15px 0; padding-left: 20px;">
+                        <li>Kalp-damar hastalıkları</li>
+                        <li>Tip 2 diyabet</li>
+                        <li>Hipertansiyon</li>
+                        <li>Obezite</li>
+                        <li>Bazı kanser türleri</li>
+                    </ul>
+                    
+                    <p>Sağlıklı beslenme konusunda kişiye özel danışmanlık almak, sürdürülebilir bir yaşam tarzı değişikliği için en etkili yoldur.</p>
+                    
+                    <a href="https://www.tugbasekeragac.com/blog/saglikli-beslenme.html" class="btn" style="margin-top: 20px;">Detaylı Bilgi Al</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
     <section class="services" id="services">
         <div class="container">
             <div class="section-title">
-                <a href="#services" class="clickable-title">
-                    <h2>Hizmetlerim</h2>
-                    <i class="fas fa-arrow-right"></i>
-                </a>
+                <h2>Hizmetlerim</h2>
             </div>
             
             <div class="services-list">
@@ -1177,19 +2428,197 @@
             </div>
             
             <div style="text-align: center; margin-top: 30px;">
-                <a href="#contact" class="btn">Hemen Randevu Al</a>
+                <a href="/hizmetlerimiz/" class="btn">Tüm Hizmetlerim</a>
             </div>
         </div>
     </section>
 
-    <!-- Testimonials Section - TIKLANABİLİR BAŞLIK -->
+    <!-- Metabolizma Hızı Bölümü -->
+    <section class="metabolism-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Metabolizma Hızı ve Kilo Kontrolü</h2>
+            </div>
+            
+            <div class="metabolism-content">
+                <div class="metabolism-img">
+                    <img src="https://www.tugbasekeragac.com/images/metabolizma-hizi-diyet.webp.png" alt="Metabolizma Hızı ve Diyet" loading="lazy">
+                </div>
+                
+                <div class="metabolism-text">
+                    <h3>Metabolizma Hızını Doğal Yollarla Artırma</h3>
+                    <p>Metabolizma hızı, vücudun dinlenme durumunda bile kalori yakma kapasitesini belirler. Yavaş bir metabolizma kilo alımına, hızlı bir metabolizma ise daha kolay kilo vermeye yardımcı olur.</p>
+                    
+                    <p>Metabolizma hızını etkileyen faktörler:</p>
+                    
+                    <ul style="margin: 15px 0; padding-left: 20px;">
+                        <li>Yaş (metabolizma yaşla birlikte yavaşlar)</li>
+                        <li>Cinsiyet (erkeklerde genellikle daha hızlıdır)</li>
+                        <li>Kas kütlesi (kaslar yağdan daha fazla enerji harcar)</li>
+                        <li>Genetik faktörler</li>
+                        <li>Hormonal durum</li>
+                    </ul>
+                    
+                    <p>Metabolizma hızını doğal yollarla artırmak için düzenli egzersiz, yeterli protein alımı ve dengeli beslenme önemlidir.</p>
+                    
+                    <a href="https://www.tugbasekeragac.com/blog/metabolizma-hizi-kilo-kontrolu.html" class="btn" style="margin-top: 20px;">Metabolizma Hakkında Bilgi Al</a>
+                </div>
+            </div>
+            
+            <!-- Metabolizma Hızı Hesaplayıcı -->
+            <div class="metabolism-calculator">
+                <h3>Metabolizma Hızı Hesaplayıcı</h3>
+                <div class="calculator-form">
+                    <div class="form-group">
+                        <label for="gender">Cinsiyet:</label>
+                        <select id="gender">
+                            <option value="male">Erkek</option>
+                            <option value="female">Kadın</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="age">Yaş:</label>
+                        <input type="number" id="age" min="15" max="100" value="30">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="weight">Kilo (kg):</label>
+                        <input type="number" id="weight" min="30" max="200" value="70">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="height">Boy (cm):</label>
+                        <input type="number" id="height" min="120" max="250" value="170">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="activity">Aktivite Seviyesi:</label>
+                        <select id="activity">
+                            <option value="1.2">Hareketsiz (az veya hiç egzersiz)</option>
+                            <option value="1.375">Hafif aktif (hafif egzersiz/haftada 1-3 gün)</option>
+                            <option value="1.55">Orta aktif (orta egzersiz/haftada 3-5 gün)</option>
+                            <option value="1.725">Çok aktif (ağır egzersiz/haftada 6-7 gün)</option>
+                            <option value="1.9">Ekstra aktif (çok ağır egzersiz/fiziksel iş)</option>
+                        </select>
+                    </div>
+                    
+                    <button class="calculate-btn" id="calculateBtn">Metabolizma Hızını Hesapla</button>
+                </div>
+                
+                <div class="result-box" id="resultBox">
+                    <h4>Metabolizma Hızı Sonucunuz:</h4>
+                    <p>Bazal Metabolizma Hızınız (BMR): <span class="result-value" id="bmrResult">0</span> kcal/gün</p>
+                    <p>Günlük Kalori İhtiyacınız: <span class="result-value" id="calorieResult">0</span> kcal/gün</p>
+                    <p class="result-note">* Bu değerler tahmini olup, kişiye özel beslenme programı için diyetisyeninize danışınız.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Glutensiz Beslenme Bölümü -->
+    <section class="glutenfree-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Çölyak Hastalığı ve Glutensiz Beslenme</h2>
+            </div>
+            
+            <div class="glutenfree-content">
+                <div class="glutenfree-img">
+                    <img src="https://www.tugbasekeragac.com/images/glutensiz-beslenme-colyak.webp.jfif" alt="Glutensiz Beslenme ve Çölyak Hastalığı" loading="lazy">
+                </div>
+                
+                <div class="glutenfree-text">
+                    <h3>Glutensiz Yaşam: Çölyak ve Gluten Hassasiyeti</h3>
+                    <p>Çölyak hastalığı, gluten proteinine karşı gelişen otoimmün bir hastalıktır. Gluten içeren gıdaların tüketilmesi, bağırsaklarda hasara ve besin emilim bozukluğuna neden olur.</p>
+                    
+                    <p>Çölyak hastalığının belirtileri:</p>
+                    
+                    <ul style="margin: 15px 0; padding-left: 20px;">
+                        <li>Karın ağrısı ve şişkinlik</li>
+                        <li>İshal veya kabızlık</li>
+                        <li>Kilo kaybı</li>
+                        <li>Yorgunluk ve halsizlik</li>
+                        <li>Demir eksikliği anemisi</li>
+                        <li>Deri döküntüleri (dermatitis herpetiformis)</li>
+                    </ul>
+                    
+                    <p>Glutensiz beslenme, çölyak hastaları için tek tedavi yöntemidir. Bu diyet, buğday, arpa, çavdar ve yulaftan kaçınmayı gerektirir.</p>
+                    
+                    <a href="https://www.tugbasekeragac.com/blog/glutensiz-beslenme.html" class="btn" style="margin-top: 20px;">Glutensiz Beslenme Rehberi</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section class="blog-section" id="blog">
+        <div class="container">
+            <div class="section-title">
+                <h2>Blog</h2>
+            </div>
+            
+            <div class="blog-grid">
+                <div class="blog-card">
+                    <div class="blog-img">
+                        <img src="https://www.tugbasekeragac.com/images/saglikli-beslenme-blog.jpg" alt="Sağlıklı Beslenme" loading="lazy">
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-date">
+                            <i class="far fa-calendar"></i> 15 Mart 2024
+                        </div>
+                        <h3>Sağlıklı Beslenme Nedir?</h3>
+                        <p class="blog-excerpt">Sağlıklı beslenme, vücudun ihtiyaç duyduğu tüm besin öğelerini yeterli ve dengeli şekilde almak demektir. Peki sağlıklı beslenme nasıl olmalı?</p>
+                        <a href="https://www.tugbasekeragac.com/blog/saglikli-beslenme.html" class="read-more">
+                            Devamını Oku <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="blog-card">
+                    <div class="blog-img">
+                        <img src="https://www.tugbasekeragac.com/images/metabolizma-hizi-blog.jpg" alt="Metabolizma Hızı" loading="lazy">
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-date">
+                            <i class="far fa-calendar"></i> 10 Mart 2024
+                        </div>
+                        <h3>Metabolizma Hızı ve Kilo Kontrolü</h3>
+                        <p class="blog-excerpt">Metabolizma hızınızı artırarak daha kolay kilo verebilir ve enerjinizi yükseltebilirsiniz. İşte metabolizma hızı hakkında bilmeniz gerekenler...</p>
+                        <a href="https://www.tugbasekeragac.com/blog/metabolizma-hizi-kilo-kontrolu.html" class="read-more">
+                            Devamını Oku <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="blog-card">
+                    <div class="blog-img">
+                        <img src="https://www.tugbasekeragac.com/images/gluten-hassasiyeti-blog.jpg" alt="Gluten Hassasiyeti" loading="lazy">
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-date">
+                            <i class="far fa-calendar"></i> 5 Mart 2024
+                        </div>
+                        <h3>Glutensiz Beslenme Rehberi</h3>
+                        <p class="blog-excerpt">Gluten hassasiyeti nedir? Çölyak hastalığından farkı ne? Glutensiz beslenme nasıl olmalı? Tüm bu soruların cevapları yazımızda...</p>
+                        <a href="https://www.tugbasekeragac.com/blog/glutensiz-beslenme.html" class="read-more">
+                            Devamını Oku <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="/blog/" class="btn">Tüm Blog Yazıları</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
     <section id="testimonials">
         <div class="container">
             <div class="section-title">
-                <a href="#testimonials" class="clickable-title">
-                    <h2>Danışan Yorumları</h2>
-                    <i class="fas fa-arrow-right"></i>
-                </a>
+                <h2>Danışan Yorumları</h2>
             </div>
             
             <div class="testimonials-grid">
@@ -1235,145 +2664,38 @@
             </div>
             
             <div style="text-align: center; margin-top: 30px;">
-                <a href="#contact" class="btn">Tüm Yorumları Gör</a>
+                <a href="/yorumlar/" class="btn">Tüm Yorumları Gör</a>
             </div>
         </div>
     </section>
 
-    <!-- YouTube Section - TIKLANABİLİR BAŞLIK -->
+    <!-- Youtube Section -->
     <section id="youtube">
         <div class="container">
             <div class="section-title">
-                <a href="#youtube" class="clickable-title">
-                    <h2>YouTube Videoları</h2>
-                    <i class="fas fa-arrow-right"></i>
-                </a>
+                <h2>Youtube Videoları</h2>
             </div>
             
             <div class="youtube-videos">
-                <!-- Video 1 -->
                 <div class="video-item">
-                    <div class="video-container" id="video1">
-                        <iframe 
-                            src="https://www.youtube-nocookie.com/embed/oloekxx03l8?start=1&rel=0&modestbranding=1&autoplay=0" 
-                            title="Diyetisyen Tuğba Şeker Ağaç YouTube Videosu 1"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            referrerpolicy="strict-origin-when-cross-origin"
-                            allowfullscreen>
-                        </iframe>
-                        <div class="youtube-fallback" id="fallback1" style="display: none;">
-                            <i class="fab fa-youtube"></i>
-                            <p>YouTube videosunu göremiyor musunuz?</p>
-                            <a href="https://www.youtube.com/watch?v=oloekxx03l8&t=1s" target="_blank" class="btn">
-                                Videoyu YouTube'da İzle
-                            </a>
-                        </div>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/oloekxx03l8" allowfullscreen title="Youtube Video"></iframe>
                     </div>
                 </div>
-                
-                <!-- Video 2 -->
                 <div class="video-item">
-                    <div class="video-container" id="video2">
-                        <iframe 
-                            src="https://www.youtube-nocookie.com/embed/aQxB2PXoaMI?rel=0&modestbranding=1&autoplay=0" 
-                            title="Diyetisyen Tuğba Şeker Ağaç YouTube Videosu 2"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            referrerpolicy="strict-origin-when-cross-origin"
-                            allowfullscreen>
-                        </iframe>
-                        <div class="youtube-fallback" id="fallback2" style="display: none;">
-                            <i class="fab fa-youtube"></i>
-                            <p>YouTube videosunu göremiyor musunuz?</p>
-                            <a href="https://www.youtube.com/watch?v=aQxB2PXoaMI" target="_blank" class="btn">
-                                Videoyu YouTube'da İzle
-                            </a>
-                        </div>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/aQxB2PXoaMI" allowfullscreen title="Youtube Video"></iframe>
                     </div>
                 </div>
-                
-                <!-- Video 3 -->
                 <div class="video-item">
-                    <div class="video-container" id="video3">
-                        <iframe 
-                            src="https://www.youtube-nocookie.com/embed/YBt7GBfeFC8?rel=0&modestbranding=1&autoplay=0" 
-                            title="Diyetisyen Tuğba Şeker Ağaç YouTube Videosu 3"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            referrerpolicy="strict-origin-when-cross-origin"
-                            allowfullscreen>
-                        </iframe>
-                        <div class="youtube-fallback" id="fallback3" style="display: none;">
-                            <i class="fab fa-youtube"></i>
-                            <p>YouTube videosunu göremiyor musunuz?</p>
-                            <a href="https://www.youtube.com/watch?v=YBt7GBfeFC8" target="_blank" class="btn">
-                                Videoyu YouTube'da İzle
-                            </a>
-                        </div>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/YBt7GBfeFC8" allowfullscreen title="Youtube Video"></iframe>
                     </div>
                 </div>
             </div>
             
             <div style="text-align: center; margin-top: 30px;">
                 <a href="https://www.youtube.com/@dyt.tugbaseker" class="btn" target="_blank">Kanalıma Abone Ol</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section - TIKLANABİLİR BAŞLIK -->
-    <section class="contact" id="contact">
-        <div class="container">
-            <div class="section-title">
-                <a href="#contact" class="clickable-title">
-                    <h2>İletişim</h2>
-                    <i class="fas fa-arrow-right"></i>
-                </a>
-            </div>
-            
-            <div class="contact-content">
-                <div class="contact-info">
-                    <div class="contact-info-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-phone"></i>
-                        </div>
-                        <div>
-                            <h3>Telefon</h3>
-                            <p><a href="tel:05070361859" style="color: white; text-decoration: underline;">0507 036 18 59</a></p>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-info-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                        <div>
-                            <h3>E-posta</h3>
-                            <p><a href="mailto:dyt.tugbasekeragac@gmail.com" style="color: white; text-decoration: underline;">dyt.tugbasekeragac@gmail.com</a></p>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-info-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-map-marker-alt"></i>
-                        </div>
-                        <div>
-                            <h3>Adres</h3>
-                            <p>Seyhan/Adana</p>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-info-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-clock"></i>
-                        </div>
-                        <div>
-                            <h3>Çalışma Saatleri</h3>
-                            <p>Pazartesi - Cumartesi: 09:00 - 18:00</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="map-container">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12771.877668128573!2d35.325103!3d36.985119999999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x15288f4e9c6d3b9b%3A0x6c6b6b6b6b6b6b6b!2sSeyhan%2C%20Adana!5e0!3m2!1str!2str!4v1690000000000!5m2!1str!2str" allowfullscreen="" loading="lazy"></iframe>
-                </div>
             </div>
         </div>
     </section>
@@ -1395,20 +2717,20 @@
                 <div class="footer-column">
                     <h3>Hızlı Bağlantılar</h3>
                     <ul style="list-style: none;">
-                        <li style="margin-bottom: 10px;"><a href="#home" style="color: white; text-decoration: none;">Ana Sayfa</a></li>
-                        <li style="margin-bottom: 10px;"><a href="#about" style="color: white; text-decoration: none;">Hakkımda</a></li>
-                        <li style="margin-bottom: 10px;"><a href="#services" style="color: white; text-decoration: none;">Hizmetler</a></li>
-                        <li style="margin-bottom: 10px;"><a href="#testimonials" style="color: white; text-decoration: none;">Yorumlar</a></li>
-                        <li style="margin-bottom: 10px;"><a href="#youtube" style="color: white; text-decoration: none;">Videolar</a></li>
-                        <li style="margin-bottom: 10px;"><a href="#contact" style="color: white; text-decoration: none;">İletişim</a></li>
+                        <li style="margin-bottom: 10px;"><a href="https://www.tugbasekeragac.com/" style="color: white; text-decoration: none;">Ana Sayfa</a></li>
+                        <li style="margin-bottom: 10px;"><a href="/hakkimizda/" style="color: white; text-decoration: none;">Hakkımda</a></li>
+                        <li style="margin-bottom: 10px;"><a href="/hizmetlerimiz/" style="color: white; text-decoration: none;">Hizmetler</a></li>
+                        <li style="margin-bottom: 10px;"><a href="/blog/" style="color: white; text-decoration: none;">Blog</a></li>
+                        <li style="margin-bottom: 10px;"><a href="/tarifler/" style="color: white; text-decoration: none;">Tarifler</a></li>
+                        <li style="margin-bottom: 10px;"><a href="/iletisim/" style="color: white; text-decoration: none;">İletişim</a></li>
                     </ul>
                 </div>
                 
                 <div class="footer-column">
                     <h3>İletişim Bilgileri</h3>
-                    <p><i class="fas fa-phone" style="margin-right: 10px;"></i> <a href="tel:05070361859" style="color: white; text-decoration: underline;">0507 036 18 59</a></p>
-                    <p><i class="fas fa-envelope" style="margin-right: 10px;"></i> <a href="mailto:dyt.tugbasekeragac@gmail.com" style="color: white; text-decoration: underline;">dyt.tugbasekeragac@gmail.com</a></p>
-                    <p><i class="fas fa-map-marker-alt" style="margin-right: 10px;"></i> Seyhan/Adana</p>
+                    <p><i class="fas fa-phone" style="margin-right: 10px;"></i> 0507 036 18 59</p>
+                    <p><i class="fas fa-envelope" style="margin-right: 10px;"></i> dyt.tugbasekeragac@gmail.com</p>
+                    <p><i class="fas fa-map-marker-alt" style="margin-right: 10px;"></i> Kurtuluş Mah. Demokrasi Sokak, Atatürk Cad. Gülbahçesi Sitesi C Blok Kat 2 No 214, 01010 Seyhan/Adana</p>
                 </div>
             </div>
             
@@ -1418,12 +2740,205 @@
         </div>
     </footer>
 
-    <!-- JavaScript for Mobile Menu, Edge Fix ve Tıklanabilir Başlıklar -->
+    <!-- JavaScript for Mobile Menu and Logo Video Button -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const mobileMenuBtn = document.getElementById('mobileMenuBtn');
             const mobileNav = document.getElementById('mobileNav');
             const mobileNavLinks = document.querySelectorAll('.mobile-nav a');
+            
+            // Logo Video Button Elements
+            const logoVideoBtn = document.getElementById('logoVideoBtn');
+            const logoVideoBtnContainer = document.getElementById('logoVideoBtnContainer');
+            const logoVideoPopupOverlay = document.getElementById('logoVideoPopupOverlay');
+            const popupCloseBtn = document.getElementById('popupCloseBtn');
+            const logoVideoTextMobile = document.getElementById('logoVideoTextMobile');
+            const logoVideoTextDesktop = document.getElementById('logoVideoText');
+            const popupVideo = document.getElementById('popupVideo');
+            
+            // Metabolizma Hızı Hesaplayıcı
+            const calculateBtn = document.getElementById('calculateBtn');
+            const resultBox = document.getElementById('resultBox');
+            const bmrResult = document.getElementById('bmrResult');
+            const calorieResult = document.getElementById('calorieResult');
+            
+            // Kapı animasyonu için elementler
+            const doorAnimation = document.getElementById('doorAnimation');
+            const enterSiteBtn = document.getElementById('enterSiteBtn');
+            const doorContainer = document.querySelector('.door-animation-container');
+            const doorLeft = document.querySelector('.door-left');
+            const doorRight = document.querySelector('.door-right');
+            
+            // Array of funny/interesting messages for the logo button
+            const messages = [
+                "Benimle diyete başlamaya ne dersin? 🥗",
+                "Haydi, sağlıklı bir başlangıç yapalım!",
+                "Diyet değil, sağlıklı yaşam tarzı! 🌿",
+                "Kilo vermek sandığın kadar zor değil! 💪",
+                "Sağlıklı beslen, mutlu yaşa! 😊",
+                "Diyet = Lezzetten ödün vermek DEĞİL! 🍎",
+                "Yaza formda girmek için son şans! ⏳",
+                "Diyetisyen desteği ile başarı garantili! ✅"
+            ];
+            
+            // Change message every 5 seconds
+            let messageIndex = 0;
+            function changeMessage() {
+                const newMessage = messages[messageIndex];
+                
+                if (logoVideoTextMobile) {
+                    logoVideoTextMobile.innerHTML = newMessage;
+                }
+                
+                if (logoVideoTextDesktop) {
+                    logoVideoTextDesktop.innerHTML = newMessage;
+                }
+                
+                messageIndex = (messageIndex + 1) % messages.length;
+            }
+            
+            // Start changing messages
+            if (logoVideoTextMobile || logoVideoTextDesktop) {
+                changeMessage(); // Initial message
+                setInterval(changeMessage, 5000);
+            }
+            
+            // Metabolizma Hızı Hesaplayıcı Fonksiyonu
+            function calculateMetabolism() {
+                const gender = document.getElementById('gender').value;
+                const age = parseInt(document.getElementById('age').value);
+                const weight = parseFloat(document.getElementById('weight').value);
+                const height = parseFloat(document.getElementById('height').value);
+                const activity = parseFloat(document.getElementById('activity').value);
+                
+                // BMR hesaplama (Harris-Benedict formülü)
+                let bmr;
+                if (gender === 'male') {
+                    bmr = 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age);
+                } else {
+                    bmr = 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age);
+                }
+                
+                // Günlük kalori ihtiyacı
+                const dailyCalories = Math.round(bmr * activity);
+                
+                // Sonuçları göster
+                bmrResult.textContent = Math.round(bmr);
+                calorieResult.textContent = dailyCalories;
+                resultBox.classList.add('active');
+                
+                // Sayfayı sonuca kaydır
+                resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+            
+            // Hesaplama butonuna tıklama olayı
+            if (calculateBtn) {
+                calculateBtn.addEventListener('click', calculateMetabolism);
+            }
+            
+            // Enter tuşuna basıldığında da hesaplama yap
+            document.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter' && (e.target.id === 'age' || e.target.id === 'weight' || e.target.id === 'height')) {
+                    calculateMetabolism();
+                }
+            });
+            
+            // Kapı Animasyonu İşlevleri
+            // Sadece Hizmetlerimiz sayfasında göster
+            if (window.location.pathname.includes('/hizmetlerimiz/') || 
+                window.location.pathname.includes('/hizmetler')) {
+                
+                // Animasyonu başlat
+                setTimeout(() => {
+                    doorContainer.classList.add('open');
+                    
+                    // Kapıları aç
+                    doorLeft.style.transform = 'rotateY(-100deg)';
+                    doorRight.style.transform = 'rotateY(100deg)';
+                    
+                    // Kapı kollarına tıklama animasyonu
+                    document.querySelectorAll('.knob').forEach(knob => {
+                        knob.addEventListener('click', function() {
+                            this.style.transform = 'rotate(90deg)';
+                            setTimeout(() => {
+                                this.style.transform = 'rotate(0deg)';
+                            }, 300);
+                        });
+                    });
+                }, 500);
+                
+                // "Sayfaya Gir" butonu işlevi
+                enterSiteBtn.addEventListener('click', function() {
+                    // Kapıları kapat
+                    doorLeft.style.transform = 'rotateY(0)';
+                    doorRight.style.transform = 'rotateY(0)';
+                    doorContainer.classList.remove('open');
+                    
+                    // Overlay'i kaldır
+                    setTimeout(() => {
+                        doorAnimation.style.opacity = '0';
+                        setTimeout(() => {
+                            doorAnimation.style.display = 'none';
+                            document.body.style.overflow = 'auto';
+                        }, 500);
+                    }, 800);
+                });
+                
+                // Eğer 10 saniye içinde tıklanmazsa otomatik kapanma
+                setTimeout(() => {
+                    if (doorAnimation.style.display !== 'none') {
+                        enterSiteBtn.click();
+                    }
+                }, 10000);
+                
+            } else {
+                // Diğer sayfalarda gösterilmesin
+                if (doorAnimation) {
+                    doorAnimation.style.display = 'none';
+                }
+            }
+            
+            // Open logo video popup
+            if (logoVideoBtn) {
+                logoVideoBtn.addEventListener('click', function() {
+                    logoVideoPopupOverlay.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                    
+                    // Play video in popup
+                    if (popupVideo) {
+                        popupVideo.currentTime = 0;
+                        popupVideo.play();
+                    }
+                });
+            }
+            
+            // Close logo video popup
+            if (popupCloseBtn) {
+                popupCloseBtn.addEventListener('click', function() {
+                    logoVideoPopupOverlay.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                    
+                    // Pause video when closing
+                    if (popupVideo) {
+                        popupVideo.pause();
+                    }
+                });
+            }
+            
+            // Close popup when clicking outside
+            if (logoVideoPopupOverlay) {
+                logoVideoPopupOverlay.addEventListener('click', function(e) {
+                    if (e.target === logoVideoPopupOverlay) {
+                        logoVideoPopupOverlay.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                        
+                        // Pause video when closing
+                        if (popupVideo) {
+                            popupVideo.pause();
+                        }
+                    }
+                });
+            }
             
             // Toggle mobile menu
             mobileMenuBtn.addEventListener('click', function() {
@@ -1449,7 +2964,7 @@
                 });
             });
             
-            // Smooth scrolling for ALL anchor links (header, başlıklar, footer)
+            // Smooth scrolling for anchor links
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function(e) {
                     e.preventDefault();
@@ -1459,25 +2974,10 @@
                     
                     const targetElement = document.querySelector(targetId);
                     if (targetElement) {
-                        // Close mobile menu if open
-                        if (mobileNav.classList.contains('active')) {
-                            mobileNav.classList.remove('active');
-                            const icon = mobileMenuBtn.querySelector('i');
-                            icon.classList.remove('fa-times');
-                            icon.classList.add('fa-bars');
-                        }
-                        
-                        // Smooth scroll to target
                         window.scrollTo({
                             top: targetElement.offsetTop - 80,
                             behavior: 'smooth'
                         });
-                        
-                        // Add active class to indicate where we scrolled to
-                        document.querySelectorAll('section').forEach(section => {
-                            section.classList.remove('active-section');
-                        });
-                        targetElement.classList.add('active-section');
                     }
                 });
             });
@@ -1495,121 +2995,27 @@
                 if (playPromise !== undefined) {
                     playPromise.catch(error => {
                         console.log("Video autoplay failed:", error);
+                        // Fallback to showing a play button or just let it be
                     });
                 }
             }
             
-            // EDGE TARAYICI İÇİN YOUTUBE FIX
-            function checkYouTubeVideos() {
-                // Check user agent for Edge
-                const isEdge = navigator.userAgent.indexOf("Edg") > -1;
+            // Logo video fallback
+            const logoVideo = document.querySelector('#logoVideoBtn video');
+            if (logoVideo) {
+                logoVideo.muted = true;
+                logoVideo.setAttribute('playsinline', '');
+                logoVideo.setAttribute('webkit-playsinline', '');
+                logoVideo.setAttribute('muted', '');
                 
-                // Select all YouTube iframes
-                const youtubeIframes = document.querySelectorAll('.video-container iframe');
-                
-                youtubeIframes.forEach((iframe, index) => {
-                    // Add event listener for Edge-specific issues
-                    iframe.addEventListener('load', function() {
-                        console.log(`YouTube video ${index + 1} loaded successfully`);
+                // Try to play the video
+                const logoPlayPromise = logoVideo.play();
+                if (logoPlayPromise !== undefined) {
+                    logoPlayPromise.catch(error => {
+                        console.log("Logo video autoplay failed:", error);
                     });
-                    
-                    iframe.addEventListener('error', function() {
-                        console.log(`YouTube video ${index + 1} failed to load`);
-                        showFallback(index + 1);
-                    });
-                    
-                    // For Edge, check if iframe has content after a delay
-                    if (isEdge) {
-                        setTimeout(() => {
-                            try {
-                                // Try to check iframe dimensions or content
-                                if (iframe.contentDocument || iframe.contentWindow.document) {
-                                    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-                                    if (iframeDoc.body.children.length === 0) {
-                                        console.log(`Edge: YouTube video ${index + 1} has no content`);
-                                        showFallback(index + 1);
-                                    }
-                                }
-                            } catch (e) {
-                                // Cross-origin error is normal for YouTube embeds
-                                // This means the iframe loaded successfully
-                                console.log(`Edge: YouTube video ${index + 1} loaded (cross-origin policy)`);
-                            }
-                        }, 3000);
-                    }
-                });
-            }
-            
-            function showFallback(videoNumber) {
-                const fallback = document.getElementById(`fallback${videoNumber}`);
-                if (fallback) {
-                    fallback.style.display = 'flex';
                 }
             }
-            
-            // Run YouTube video check
-            checkYouTubeVideos();
-            
-            // Add hover effect to clickable titles
-            const clickableTitles = document.querySelectorAll('.clickable-title');
-            clickableTitles.forEach(title => {
-                title.addEventListener('mouseenter', function() {
-                    this.style.cursor = 'pointer';
-                });
-                
-                title.addEventListener('click', function() {
-                    // Already handled by smooth scrolling above
-                    // But we can add a visual feedback
-                    this.style.transform = 'scale(0.98)';
-                    setTimeout(() => {
-                        this.style.transform = '';
-                    }, 200);
-                });
-            });
-            
-            // Mobile için tıklanabilir alanları büyüt
-            if (window.innerWidth <= 768) {
-                const sectionTitles = document.querySelectorAll('.section-title');
-                sectionTitles.forEach(title => {
-                    title.style.cursor = 'pointer';
-                    title.addEventListener('click', function(e) {
-                        // Prevent double triggering
-                        if (!e.target.classList.contains('clickable-title')) {
-                            const link = this.querySelector('.clickable-title');
-                            if (link) link.click();
-                        }
-                    });
-                });
-            }
-            
-            // Intersection Observer for section highlighting
-            const sections = document.querySelectorAll('section');
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.3
-            };
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        // Remove active class from all sections
-                        sections.forEach(section => {
-                            section.classList.remove('active-section');
-                        });
-                        
-                        // Add active class to current section
-                        entry.target.classList.add('active-section');
-                        
-                        // Update URL hash without scrolling
-                        history.replaceState(null, null, `#${entry.target.id}`);
-                    }
-                });
-            }, observerOptions);
-            
-            sections.forEach(section => {
-                observer.observe(section);
-            });
         });
     </script>
 </body>
